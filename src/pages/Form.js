@@ -1,7 +1,11 @@
 import React, { useState } from "react";
-import { Container, Form, Row, Col, Button, InputGroup } from "react-bootstrap";
+import { Container, Form, Row, Col, Button } from "react-bootstrap";
 import { useFormik } from "formik"
 import * as Yup from "yup";
+import axios from "axios";
+import { toast } from 'react-toastify';
+
+const url = "https://node-todo-dev.herokuapp.com/api/todos";
 
 export default () => {
   const [description, setDescription] = useState("");
@@ -15,8 +19,16 @@ export default () => {
       description: "",
     },
     validationSchema: todoSchema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      try {
+        const res = await axios.post(url, values);
+        if(res.status === 201) {
+          toast("TODO criado com sucesso!")
+        }
+      } catch (error) {
+        console.log("Erro: ", error);
+      }
+      
     }
   })
   return <div>
