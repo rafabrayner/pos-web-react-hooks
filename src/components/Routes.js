@@ -7,7 +7,7 @@ export default () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/home" component={List} />
+        <Route path="/" exact component={List} />
         <Route path="/create" component={Form} />
       </Switch>
     </BrowserRouter>
